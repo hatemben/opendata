@@ -13,7 +13,8 @@
 * @todo 
 */
 
-//Start edit here
+
+//Start edit section
 $file = "tsv/candidat-txt.tsv";
 
 // items per pages;
@@ -24,8 +25,9 @@ $lastpage = 7;
 // number of pages
 $numpages = 525;
 
+// End edit section
 
-// don't edit here
+// No need to change anything here
 $data = file($file);
 
 $i  = 0;
@@ -37,25 +39,37 @@ foreach($data as $k=>$v){
 	$v = trim($v);
 
 	if ($page == 1) { // first page
+
 echo "First page ($i)\n\n";
+
 		if ($i < $firstpage){
+
 			$name[$i]['fname'] = $v;
+
 		} elseif ($i >= $firstpage and $i < $firstpage*2) {
+
 			$name[$i-$firstpage]['sname'] = $v;
+
 		} elseif($i >= $firstpage*2 and $i < $firstpage*3) {
+
 			$name[$i-$firstpage*2]['familyname'] = $v;
+
 		} elseif ($i >= $firstpage*3 and $i < $firstpage*4) {
+
 			if (!is_numeric($v*1)){die('result is not a CIN :'.$v);}
+
 			$name[$i-$firstpage*3]['cin'] = $v;
+
 		}
 
 
 		if ($i == $firstpage *4-1) {
-			//print_r($name); 
+
 			$page++;$j =-1;
 		}
 
 	} elseif ( $page == $numpages) { // last page
+
 echo "Last page\n\n";
 
 
@@ -81,11 +95,10 @@ echo "Last page\n\n";
 
 
 		if ($i == $lastpage *4) {
-			//print_r($name); 
 			$page++;
 		}
 
-	} else {  // other page
+	} else {  // other pages
 
 echo "Page number $page\n\n";
 
@@ -118,7 +131,7 @@ echo "Page number $page\n\n";
 	$i++; $j++;
 }
 
-
+// print verification info
 echo "size of name = ".sizeof($name)."\n page number : $page / $numpages\n";
 
 $res = json_encode($name);
